@@ -1,4 +1,3 @@
-USE laundry;
 
 -- Tabel users
 CREATE TABLE `users` (
