@@ -1,5 +1,4 @@
-<?php
-session_start();
+/*session_start();
 require_once "database.php";
 $pdo = new database();
 $edit_form = false;
@@ -43,7 +42,7 @@ if(isset($_POST['cancel'])){
   header("Location: dashboard.php#profil");
 }
 
-?>
+?> */
 
 <!DOCTYPE html>
 <head>
