@@ -165,7 +165,7 @@ if(isset($_POST['cancel'])){
         <h4 class="tengah">Edit profil</h4>
         <form method="post">
             <p class="tengah">Nama : </p>
-            <p class="tengah"><input type="text" class = "tengah" name="nama" value="<?php echo $name; ?>"></p>
+            <p class="tengah"><input type="text" class = "tengah" name="nama" value="<?= htmlspecialchars($name) ?>"</p>
         <p class="tengah">E-mail : </p>
             <p class="tengah"><input type="email" class = "tengah" name="email" value="<?php echo $email; ?>"></p>
         <p class="tengah">Password : </p>
