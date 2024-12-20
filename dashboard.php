@@ -1,48 +1,66 @@
-/*session_start();
+<?php
+session_start();
 require_once "database.php";
+
 $pdo = new database();
 $edit_form = false;
 
-//Jika user belum login dan membuka ini, maka langsung diarahkan ke halaman login
-if(isset($_SESSION['email']) == 0){
+// Jika user belum login dan membuka ini, maka langsung diarahkan ke halaman login
+if (!isset($_SESSION['email']) || empty($_SESSION['email'])) {
     header('Location: login.php');
+    exit;
 }
 
-//Jika admin login, maka langsung diarahkan ke halaman dashboard admin
-//Ubah e-mailnya jika ingin mengganti akun admin
-if($_SESSION['email'] == 'admin@laundryonlinemks.com'){
+// Jika admin login, maka langsung diarahkan ke halaman dashboard admin
+// Ubah e-mailnya jika ingin mengganti akun admin
+if ($_SESSION['email'] == 'admin@laundryonlinemks.com') {
     header('Location: admin_dash.php');
+    exit;
 }
 
-//Memanggil tabel pesanan
-$rows = $pdo -> getPesanan($_SESSION['id']);
-
-//Mengambil data dan menaruh di kotak edit
-if(isset($_GET['edit'])){
-  $data = $pdo -> getEditPesanan($_GET['edit']);
-  $edit_form = true;
-  $name = $data['name'];
-  $email = $data['email'];
-  $nomor_telepon = $data['nomor_telepon'];
-  $id = $data['id'];
+// Memanggil tabel pesanan
+if (isset($_SESSION['id'])) {
+    $rows = $pdo->getPesanan($_SESSION['id']);
+} else {
+    header("Location: login.php");
+    exit;
 }
 
-//Mengupdate data
-if(isset($_POST['update'])){
-  $update = $pdo -> updateData($_POST['nama'], $_POST['email'], $_POST['password'], $_POST['nomor_telepon'], $id);
-  $_SESSION['name'] = $_POST['nama'];
-  $_SESSION['email'] = $_POST['email'];
-  $_SESSION['nomortelepon'] = $_POST['nomor_telepon'];
-  // Cara get data dari spesifik nama_order terus dikirim kesini
-  header("Location: dashboard.php#profil");
+// Mengambil data dan menaruh di kotak edit
+if (isset($_GET['edit'])) {
+    $data = $pdo->getEditPesanan($_GET['edit']);
+    if ($data) {
+        $edit_form = true;
+        $name = $data['name'];
+        $email = $data['email'];
+        $nomor_telepon = $data['nomor_telepon'];
+        $id = $data['id'];
+    }
 }
 
-//Untuk tombol membatalkan edit
-if(isset($_POST['cancel'])){
-  header("Location: dashboard.php#profil");
+// Mengupdate data
+if (isset($_POST['update'])) {
+    $id = $_SESSION['id'];
+    $update = $pdo->updateData(
+        $_POST['nama'],
+        $_POST['email'],
+        $_POST['password'],
+        $_POST['nomor_telepon'],
+        $id
+    );
+    $_SESSION['name'] = $_POST['nama'];
+    $_SESSION['email'] = $_POST['email'];
+    $_SESSION['nomortelepon'] = $_POST['nomor_telepon'];
+    header("Location: dashboard.php#profil");
+    exit;
 }
 
-?> */
+// Untuk tombol membatalkan edit
+if (isset($_POST['cancel'])) {
+    header("Location: dashboard.php#profil");
+    exit;
+}
+?>
 
 <!DOCTYPE html>
 <head>
