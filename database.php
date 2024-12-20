@@ -5,7 +5,7 @@ class database{
         try{
             $serverName = 'laundrycc.mysql.database.azure.com';
             $userName = 'laundrycc';
-            $password = 'Patraerix26.';
+            $password = 'Admin123';
             $port = 3306;
             $dbName = 'laundrycc';
             $this-> pdo = new PDO("mysql:host=$serverName;port=3306;dbname=$dbName",$userName, $password);
