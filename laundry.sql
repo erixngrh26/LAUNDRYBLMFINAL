@@ -1,67 +1,70 @@
 USE laundry;
 
+-- Tabel users
 CREATE TABLE `users` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(128) DEFAULT NULL,
-  `email` varchar(128) DEFAULT NULL,
-  `password` varchar(255) DEFAULT NULL,
-  `nomor_telepon` varchar(255) DEFAULT NULL,
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(128) DEFAULT NULL,
+  `email` VARCHAR(128) DEFAULT NULL,
+  `password` VARCHAR(255) DEFAULT NULL,
+  `nomor_telepon` VARCHAR(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `email` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=UTF8;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4;
 
-CREATE TABLE `Order` (
+-- Tabel orders
+CREATE TABLE `orders` (
   `id` INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
   `jenis_laundry` VARCHAR(8) DEFAULT NULL,
   `massa_barang` INT(3) DEFAULT NULL,
   `jumlah_barang` INT(3) DEFAULT NULL,
   `waktu_pengambilan` DATE DEFAULT NULL,
   `waktu_pengantaran` DATE DEFAULT NULL,
-  `alamat` VARCHAR (80) DEFAULT NULL,
-  `catatan` VARCHAR (255) DEFAULT NULL,
-  `garis_lintang` FLOAT(10, 6) DEFAULT NULL,
-  `garis_bujur` FLOAT(10, 6) DEFAULT NULL,
+  `alamat` VARCHAR(80) DEFAULT NULL,
+  `catatan` VARCHAR(255) DEFAULT NULL,
+  `garis_lintang` DECIMAL(10,6) DEFAULT NULL,
+  `garis_bujur` DECIMAL(10,6) DEFAULT NULL,
   `harga_total` INT(10) DEFAULT NULL,
   `status_pemesanan` VARCHAR(50) DEFAULT NULL,
   `id_user` INT(11) DEFAULT NULL,
-  `list_satuan` VARCHAR (255) DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+  `list_satuan` VARCHAR(255) DEFAULT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4;
 
+-- Tabel harga
 CREATE TABLE `harga` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `nama_barang` varchar(30) DEFAULT NULL,
-  `harga` varchar(20) DEFAULT NULL,
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `nama_barang` VARCHAR(30) DEFAULT NULL,
+  `harga` DECIMAL(10,2) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4;
 
--- Tambah row untuk admin
-INSERT INTO users (name, email, password, nomor_telepon) VALUES ("Administrator", "admin@laundryonlinemks.com", "$2y$10$3ZovOOjFDvk4eain7/XFFuAfVLt9.zOyFM/FK8NC/2KHmA0Zk5O6W", "081242133333");
+-- Tambah data ke tabel users
+INSERT INTO users (name, email, password, nomor_telepon) 
+VALUES ("Administrator", "admin@laundryonlinemks.com", "$2y$10$3ZovOOjFDvk4eain7/XFFuAfVLt9.zOyFM/FK8NC/2KHmA0Zk5O6W", "081242133333");
 
--- Tambah row untuk harga
-INSERT INTO `harga` (id, nama_barang, harga) VALUES(1, "Kaos/T-Shirt", "Rp.10000");
-INSERT INTO `harga` (id, nama_barang, harga) VALUES(2, "Kemeja", "Rp.20000");
-INSERT INTO `harga` (id, nama_barang, harga) VALUES(3, "Kemeja Batik", "Rp.20000");
-INSERT INTO `harga` (id, nama_barang, harga) VALUES(4, "Baju Muslim", "Rp.20000");
-INSERT INTO `harga` (id, nama_barang, harga) VALUES(5, "Kebaya", "Rp.40000");
-INSERT INTO `harga` (id, nama_barang, harga) VALUES(6, "Gaun Panjang", "Rp.25000");
-INSERT INTO `harga` (id, nama_barang, harga) VALUES(7, "Rok", "Rp.15000");
-INSERT INTO `harga` (id, nama_barang, harga) VALUES(8, "Baju Hangat/Sweater", "Rp.20000");
-INSERT INTO `harga` (id, nama_barang, harga) VALUES(9, "Jaket", "Rp.30000");
-INSERT INTO `harga` (id, nama_barang, harga) VALUES(10, "Jas/Blazer", "Rp.45000");
-INSERT INTO `harga` (id, nama_barang, harga) VALUES(11, "Celana Pendek", "Rp.10000");
-INSERT INTO `harga` (id, nama_barang, harga) VALUES(12, "Celana Panjang", "Rp.20000");
-INSERT INTO `harga` (id, nama_barang, harga) VALUES(13, "Sarung", "Rp.20000");
-INSERT INTO `harga` (id, nama_barang, harga) VALUES(14, "Tas Sekolah/Ransel", "Rp.30000");
-INSERT INTO `harga` (id, nama_barang, harga) VALUES(15, "Selendang/Kerudung", "Rp.10000");
-INSERT INTO `harga` (id, nama_barang, harga) VALUES(16, "Blouse", "Rp.15000");
-INSERT INTO `harga` (id, nama_barang, harga) VALUES(17, "Mukena", "Rp.25000");
-INSERT INTO `harga` (id, nama_barang, harga) VALUES(18, "Sajadah", "Rp.20000");
-INSERT INTO `harga` (id, nama_barang, harga) VALUES(19, "Topi", "Rp.10000");
-INSERT INTO `harga` (id, nama_barang, harga) VALUES(20, "Handuk Mandi", "Rp.25000");
-INSERT INTO `harga` (id, nama_barang, harga) VALUES(21, "Bantal", "Rp.20000");
-INSERT INTO `harga` (id, nama_barang, harga) VALUES(22, "Sarung Bantal/Guling", "Rp.5000");
-INSERT INTO `harga` (id, nama_barang, harga) VALUES(23, "Sprei Single", "Rp.15000");
-INSERT INTO `harga` (id, nama_barang, harga) VALUES(24, "Selimut", "Rp.25000");
-INSERT INTO `harga` (id, nama_barang, harga) VALUES(25, "Bed Cover", "Rp.60000");
-INSERT INTO `harga` (id, nama_barang, harga) VALUES(26, "Keset", "Rp.20000");
-
+-- Tambah data ke tabel harga
+INSERT INTO `harga` (id, nama_barang, harga) VALUES (1, "Kaos/T-Shirt", 10000.00);
+INSERT INTO `harga` (id, nama_barang, harga) VALUES (2, "Kemeja", 20000.00);
+INSERT INTO `harga` (id, nama_barang, harga) VALUES (3, "Kemeja Batik", 20000.00);
+INSERT INTO `harga` (id, nama_barang, harga) VALUES (4, "Baju Muslim", 20000.00);
+INSERT INTO `harga` (id, nama_barang, harga) VALUES (5, "Kebaya", 40000.00);
+INSERT INTO `harga` (id, nama_barang, harga) VALUES (6, "Gaun Panjang", 25000.00);
+INSERT INTO `harga` (id, nama_barang, harga) VALUES (7, "Rok", 15000.00);
+INSERT INTO `harga` (id, nama_barang, harga) VALUES (8, "Baju Hangat/Sweater", 20000.00);
+INSERT INTO `harga` (id, nama_barang, harga) VALUES (9, "Jaket", 30000.00);
+INSERT INTO `harga` (id, nama_barang, harga) VALUES (10, "Jas/Blazer", 45000.00);
+INSERT INTO `harga` (id, nama_barang, harga) VALUES (11, "Celana Pendek", 10000.00);
+INSERT INTO `harga` (id, nama_barang, harga) VALUES (12, "Celana Panjang", 20000.00);
+INSERT INTO `harga` (id, nama_barang, harga) VALUES (13, "Sarung", 20000.00);
+INSERT INTO `harga` (id, nama_barang, harga) VALUES (14, "Tas Sekolah/Ransel", 30000.00);
+INSERT INTO `harga` (id, nama_barang, harga) VALUES (15, "Selendang/Kerudung", 10000.00);
+INSERT INTO `harga` (id, nama_barang, harga) VALUES (16, "Blouse", 15000.00);
+INSERT INTO `harga` (id, nama_barang, harga) VALUES (17, "Mukena", 25000.00);
+INSERT INTO `harga` (id, nama_barang, harga) VALUES (18, "Sajadah", 20000.00);
+INSERT INTO `harga` (id, nama_barang, harga) VALUES (19, "Topi", 10000.00);
+INSERT INTO `harga` (id, nama_barang, harga) VALUES (20, "Handuk Mandi", 25000.00);
+INSERT INTO `harga` (id, nama_barang, harga) VALUES (21, "Bantal", 20000.00);
+INSERT INTO `harga` (id, nama_barang, harga) VALUES (22, "Sarung Bantal/Guling", 5000.00);
+INSERT INTO `harga` (id, nama_barang, harga) VALUES (23, "Sprei Single", 15000.00);
+INSERT INTO `harga` (id, nama_barang, harga) VALUES (24, "Selimut", 25000.00);
+INSERT INTO `harga` (id, nama_barang, harga) VALUES (25, "Bed Cover", 60000.00);
+INSERT INTO `harga` (id, nama_barang, harga) VALUES (26, "Keset", 20000.00);
