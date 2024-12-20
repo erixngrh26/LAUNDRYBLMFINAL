@@ -63,4 +63,4 @@ jobs:
           app-name: 'laundrycc'
           slot-name: 'Production'
           package: .
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_92BE6F8E307E4EEF88D739B4D7F37817 }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_B4AEFCD3A85C44BF8366D5B4859FB2FA }}
