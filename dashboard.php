@@ -60,7 +60,7 @@ if(isset($_POST['cancel'])){
 <body>
     <!-- Navbar -->
 <nav id="navbar-user" class="navbar navbar-expand-lg navbar-dark bg-primary">
-  <a class="navbar-brand" href="/admin_dash.php"><b>Laundry OnLine</b></a>
+  <a class="navbar-brand" href="admin_dash.php"><b>Laundry OnLine</b></a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
