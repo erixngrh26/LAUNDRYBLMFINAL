@@ -8,7 +8,7 @@ $view_order = false;
 // Init
 $garisLintang = "";
 $garisBujur = "";
-
+/*
     // Jika user belum login dan membuka ini, maka langsung diarahkan ke halaman login
     if (!isset($_SESSION['email']) || empty($_SESSION['email'])) {
     header('Location: login.php');
@@ -19,7 +19,7 @@ $garisBujur = "";
     if ($_SESSION['email'] != 'admin@laundryonlinemks.com') {
         exit("<h1>Access Denied</h1>");
 }
-
+*/
 ?>
 
 <!DOCTYPE html>
