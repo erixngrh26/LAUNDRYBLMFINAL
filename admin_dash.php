@@ -198,7 +198,7 @@ $banyakpesanan = $pdo->banyak_pesanan();
                             <td><?= $orders['harga_total'] ?></td>
                             <td><?= $orders['status_pemesanan'] ?></td>
                             <td>
-                                <form action="admin_dash.php?view=<?= $orders['id']; ?>#pesanan" method="post">
+                                <form action="admin_dash.php?view=<?php echo $orders['id']; ?>#pesanan" method="post">
                                     <input type="hidden" name="id" value="<?= $orders['id'] ?>">
                                     <input type="submit" value="View" name="view">
                                 </form>
