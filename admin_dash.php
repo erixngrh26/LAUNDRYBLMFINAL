@@ -2,130 +2,22 @@
 session_start();
 require_once "database.php";
 //Memanggil kelas database
-try {
-    $pdo = new database();
-} catch (Exception $e) {
-    exit("Database connection failed: " . $e->getMessage());
-}
-
+$pdo = new database();
 $edit_form = false;
 $view_order = false;
 
-
-//Init
-$garisLintang = "";
-$garisBujur = "";
-
-//Jika user belum login dan membuka ini, maka langsung diarahkan ke halaman login
-if(isset($_SESSION['email']) == 0){
-    exit("<h1>Access Denied</h1>");
-}
-
-//Akses selain e-mail admin akan ditolak
-//Ubah e-mailnya jika ingin mengganti akun admin
-if($_SESSION['email'] != 'admin@laundryonlinemks.com'){
-    exit("<h1>Access Denied</h1>");
-}
-
-
-/*
-//Memunculkan data customers
-$rows = $pdo -> showData();
-
-//Memunculkan data order
-if (isset($orders)) {
-    foreach ($orders as $order) {
-        // Your code here
-    }
-} else {
-    echo "No orders found.";
-}
-
-//Menghapus data
-if (isset($_POST['delete'])){
-    //Jika tekan hapus admin
-    //Ubah nomor jika id admin berubah
-    if($_POST['id'] == 1){
-        echo('<div class="alert alert-danger" role="alert">');
-        echo('Tidak bisa hapus administrator');
-        echo('</div>');
+    //Jika user sudah login, maka akan langsung terpindah ke dashboard user/admin
+    if(isset($_SESSION['email']) == 0){
+    
     }
     else{
-        $pdo -> deleteData($_POST['id']);
-        header("Location: admin_dash.php#customers");
-    }
-}
-
-//Mengambil data dan menaruh di kotak edit customer
-if(isset($_GET['edit'])){
-    $data = $pdo -> getData($_GET['edit']);
-    $edit_form = true;
-    $name = $data['name'];
-    $email = $data['email'];
-    $nomor_telepon = $data['nomor_telepon'];
-    $id = $data['id'];
-}
-
-//Mengambil data dan menaruh di kotak view order
-if(isset($_GET['view'])){
-    $pemesanan = $pdo -> getOrder($_GET['view']);
-    $view_order = true;
-    $userId = $pemesanan['id_user'];
-    $jenisLaundry = $pemesanan['jenis_laundry'];
-    $massaBarang = $pemesanan['massa_barang'];
-    $jumlahBarang = $pemesanan['jumlah_barang'];
-    $waktuPengambilan = $pemesanan['waktu_pengambilan'];
-    $waktuPengantaran = $pemesanan['waktu_pengantaran'];
-    $alamat = $pemesanan['alamat'];
-    $catatan = $pemesanan['catatan'];
-    $garisLintang = "".$pemesanan['garis_lintang'].", ";
-    $garisBujur = $pemesanan['garis_bujur'];
-    $hargaTotal = $pemesanan['harga_total'];
-    $statusPemesanan = $pemesanan['status_pemesanan'];
-    $orderId = $pemesanan['id'];
-    $listSatuan = $pemesanan['list_satuan'];
-}
-
-if (isset($_POST['update'])) {
-    $email = filter_var($_POST['email'], FILTER_VALIDATE_EMAIL);
-    $nomor_telepon = preg_replace('/\D/', '', $_POST['nomor_telepon']); // Remove non-numeric characters
-
-    if (!$email) {
-        exit("Invalid email format.");
+        header("Location: dashboard.php");    
     }
 
-    if (!is_numeric($nomor_telepon)) {
-        exit("Phone number must be numeric.");
-    }
+    //Memunculkan daftar harga
+    $rows = $pdo -> getHarga();
 
-    $update = $pdo->updateData($_POST['nama'], $email, $_POST['password'], $nomor_telepon, $id);
-    header("Location: admin_dash.php#customers");
-}
-
-//Mengupdate data order
-if(isset($_POST['update_order'])){
-    $radio_status = $_POST['status'];
-    $update = $pdo -> updateStatus($radio_status, $orderId);
-    header("Location: admin_dash.php#pesanan");
-}
-
-//Untuk tombol membatalkan edit
-if(isset($_POST['cancel'])){
-    header("Location: admin_dash.php#customers");
-}
-
-//Untuk tombol membatalkan edit
-if(isset($_POST['cancel_update'])){
-    header("Location: admin_dash.php#pesanan");
-}
-
-//Mengambil jumlah data customers
-$banyakdata = $pdo -> banyak_data();
-
-//Mengambil jumlah data pesanan
-$banyakpesanan = $pdo -> banyak_pesanan();
 ?>
-*/
 
 <!DOCTYPE html>
 <head>
