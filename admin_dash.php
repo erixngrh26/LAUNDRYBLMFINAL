@@ -2,7 +2,12 @@
 session_start();
 require_once "database.php";
 //Memanggil kelas database
-$pdo = new database();
+try {
+    $pdo = new database();
+} catch (Exception $e) {
+    exit("Database connection failed: " . $e->getMessage());
+}
+
 $edit_form = false;
 $view_order = false;
 
@@ -28,7 +33,13 @@ if($_SESSION['email'] != 'admin@laundryonlinemks.com'){
 $rows = $pdo -> showData();
 
 //Memunculkan data order
-$orders = $pdo -> showPesanan();
+if (isset($orders)) {
+    foreach ($orders as $order) {
+        // Your code here
+    }
+} else {
+    echo "No orders found.";
+}
 
 //Menghapus data
 if (isset($_POST['delete'])){
@@ -75,9 +86,19 @@ if(isset($_GET['view'])){
     $listSatuan = $pemesanan['list_satuan'];
 }
 
-//Mengupdate data customers
-if(isset($_POST['update'])){
-    $update = $pdo -> updateData($_POST['nama'], $_POST['email'], $_POST['password'], $_POST['nomor_telepon'], $id);
+if (isset($_POST['update'])) {
+    $email = filter_var($_POST['email'], FILTER_VALIDATE_EMAIL);
+    $nomor_telepon = preg_replace('/\D/', '', $_POST['nomor_telepon']); // Remove non-numeric characters
+
+    if (!$email) {
+        exit("Invalid email format.");
+    }
+
+    if (!is_numeric($nomor_telepon)) {
+        exit("Phone number must be numeric.");
+    }
+
+    $update = $pdo->updateData($_POST['nama'], $email, $_POST['password'], $nomor_telepon, $id);
     header("Location: admin_dash.php#customers");
 }
 
