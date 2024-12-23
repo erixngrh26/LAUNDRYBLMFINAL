@@ -7,14 +7,15 @@ $pdo = new database();
     // Jika user belum login dan membuka ini, maka langsung diarahkan ke halaman login
     if (!isset($_SESSION['email']) || empty($_SESSION['email'])) {
     header('Location: login.php');
-    
-    }
-    else{
-        header("Location: dashboard.php");    
-    }
+    exit;
+}
 
-    //Memunculkan daftar harga
-    $rows = $pdo -> getHarga();
+    // Jika admin login, maka langsung diarahkan ke halaman dashboard admin
+    // Ubah e-mailnya jika ingin mengganti akun admin
+    if ($_SESSION['email'] == 'admin@laundryonlinemks.com') {
+        header('Location: admin_dash.php');
+        exit;
+}
 
 ?>
 
