@@ -99,7 +99,7 @@ if (isset($_POST['cancel_update'])) {
                     <td><?= $order['status_pemesanan'] ?></td>
                     <td>
                         <form method="get" action="admin_dash.php">
-                            <input type="hidden" name="view" value="<?= $order['id_user'] ?>">
+                            <input type="hidden" name="view" value="<?= $order['id'] ?>">
                             <button class="btn btn-primary btn-sm" type="submit">View</button>
                         </form>
                     </td>
