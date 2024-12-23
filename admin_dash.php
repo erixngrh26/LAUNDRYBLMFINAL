@@ -200,8 +200,8 @@ $view_order = false;
                         <td><?=$order['harga_total'] ?></td>
                         <td><?=$order['status_pemesanan'] ?></td>
                         <td>
-                            <form action="admin_dash.php?view=<?php echo $order['id']; ?>#pesanan" method="post">
-                                <input type="hidden" name="id" value="<?=$order['id']?>">
+                            <form action="admin_dash.php?view=<?php echo htmlspecialchars($order['id'], ENT_QUOTES, 'UTF-8'); ?>#pesanan" method="post">
+                                <input type="hidden" name="id" value="<?php echo htmlspecialchars($order['id'], ENT_QUOTES, 'UTF-8'); ?>">
                                 <input type="submit" value="View" name="view">
                             </form>
                         </td>
