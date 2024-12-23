@@ -204,10 +204,18 @@ $banyakpesanan = $pdo->banyak_pesanan();
                                 </form>
                             </td>
                         </tr>
-                        <?php endforeach; ?>
+                        <?php
+                            }
+                        ?>
                     </tbody>
                 </table>
-                <?php if ($view_orders): ?>
+                <br><br>
+                <?php 
+                    if ($view_order == false){
+                        // Kosong
+                    }
+                    else{
+                ?>
                     <h4 class="tengah">View Data</h4>
                     <ul>
                         <li>ID User: <?= $userId; ?></li>
