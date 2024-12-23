@@ -173,7 +173,7 @@ $pdo = new database();
             <p style="text-align:left;" class="lead">Yang sering ditanyakan pelanggan</p>
             <hr class="my-4">
             <h3>Bagaimana saya dapat menggunakan layanan Laundry Online?</h3>
-            <p> Dapat digunakan melalui website resmi Laundry Online yang dapat akses di www.LaundryOnlineMks.com</p>
+            <p> Dapat digunakan melalui website resmi Laundry Online yang dapat akses di www.LONDO.com</p>
                 <br>
             <h3> Bagaimana Cara Order Laundry Online?</h3>
             <p>Melalui website Laundry Online, Kamu dapat membuat order dengan memilih lokasi Kamu untuk
