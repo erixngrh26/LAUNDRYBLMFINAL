@@ -1,51 +1,45 @@
 <?php
-session_start();
-require_once "database.php";
+require_once 'database.php';
+$pdo = new Database();
 
-// Memanggil kelas database
-$pdo = new database();
-$edit_form = false;
-$view_order = false;
+// Periksa apakah parameter 'view' ada
+if (isset($_GET['view'])) {
+    $viewId = htmlspecialchars($_GET['view'], ENT_QUOTES, 'UTF-8');
+    $pemesanan = $pdo->getOrder($viewId);
 
-if (!isset($_SESSION['email'])) {
-    exit("<h1>Access Denied</h1>");
+    // Cek apakah data ditemukan
+    if ($pemesanan === false) {
+        echo "<h1>Order not found</h1>";
+        exit();
+    }
+} else {
+    $pemesanan = null;
 }
 
-if ($_SESSION['email'] != 'admin@laundryonlinemks.com') {
-    exit("<h1>Access Denied</h1>");
-}
+// Fungsi getOrder
+class Database {
+    private $pdo;
 
-// Memunculkan data customers dan pesanan
-$rows = $pdo->showData();
-$orders = $pdo->showPesanan();
+    public function __construct() {
+        $dsn = 'mysql:host=laundrycc.mysql.database.azure.com;dbname=laundrycc;charset=utf8mb4';
+        $username = 'laundrycc';
+        $password = 'Admin123';
 
-// Menghapus data
-if (isset($_POST['delete'])) {
-    if ($_POST['id'] == 1) {
-        echo('<div class="alert alert-danger" role="alert">Tidak bisa hapus administrator</div>');
-    } else {
-        $pdo->deleteData($_POST['id']);
-        header("Location: admin_dash.php#customers");
+        try {
+            $this->pdo = new PDO($dsn, $username, $password);
+            $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        } catch (PDOException $e) {
+            die("Database connection failed: " . $e->getMessage());
+        }
+    }
+
+    public function getOrder($id) {
+        $stmt = $this->pdo->prepare("SELECT * FROM pesanan WHERE id = :id");
+        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 }
-
-// Mengambil data untuk view pesanan
-if (isset($_GET['view'])) {
-    $pemesanan = $pdo->getOrder($_GET['view']);
-    $view_order = true;
-}
-
-// Mengupdate status pesanan
-if (isset($_POST['update_order'])) {
-    $update = $pdo->updateStatus($_POST['status'], $_POST['order_id']);
-    header("Location: admin_dash.php#pesanan");
-}
-
-// Membatalkan aksi
-if (isset($_POST['cancel_update'])) {
-    header("Location: admin_dash.php#pesanan");
-}
-
 ?>
 
 <!DOCTYPE html>
@@ -53,97 +47,24 @@ if (isset($_POST['cancel_update'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard Admin - Laundry OnLine</title>
-    <link rel="stylesheet" href="bootstrap/css/bootstrap.css">
-    <link rel="stylesheet" href="css/dash.css">
-    <script src="js/jquery-3.5.1.js"></script>
-    <script src="bootstrap/js/bootstrap.bundle.js"></script>
-    <script src="bootstrap/jquery.dataTables.min.js"></script>
-    <script src="bootstrap/dataTables.bootstrap4.min.js"></script>
+    <title>Admin Dashboard</title>
 </head>
 <body>
-<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-    <a class="navbar-brand" href="#">Laundry OnLine</a>
-    <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav ml-auto">
-            <li class="nav-item"><a class="nav-link" href="#beranda">Beranda</a></li>
-            <li class="nav-item"><a class="nav-link" href="#pesanan">Pesanan</a></li>
-            <li class="nav-item"><a class="nav-link" href="#customers">Profil Customers</a></li>
-            <li class="nav-item"><a class="nav-link" href="logout.php">Logout</a></li>
-        </ul>
-    </div>
-</nav>
-
-<div class="container mt-4">
-    <h1>Daftar Pesanan</h1>
-    <table id="pagination" class="table table-striped">
-        <thead>
-            <tr>
-                <th>ID User</th>
-                <th>Jenis Laundry</th>
-                <th>Massa Barang</th>
-                <th>Jumlah Barang</th>
-                <th>Harga Total</th>
-                <th>Status</th>
-                <th>Aksi</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php foreach ($orders as $order): ?>
-                <tr>
-                    <td><?= $order['id_user'] ?></td>
-                    <td><?= $order['jenis_laundry'] ?></td>
-                    <td><?= $order['massa_barang'] ?></td>
-                    <td><?= $order['jumlah_barang'] ?></td>
-                    <td><?= $order['harga_total'] ?></td>
-                    <td><?= $order['status_pemesanan'] ?></td>
-                    <td>
-                        <form method="get" action="admin_dash.php">
-                            <input type="hidden" name="view" value="<?= $order['id'] ?>">
-                            <button class="btn btn-primary btn-sm" type="submit">View</button>
-                        </form>
-                    </td>
-                </tr>
-            <?php endforeach; ?>
-        </tbody>
-    </table>
-
-    <?php if ($view_order): ?>
-        <div class="card mt-4">
-            <div class="card-header">Detail Pesanan</div>
-            <div class="card-body">
-                <ul>
-                    <li>ID User: <?= $pemesanan['id_user'] ?></li>
-                    <li>Jenis Laundry: <?= $pemesanan['jenis_laundry'] ?></li>
-                    <li>Massa Barang: <?= $pemesanan['massa_barang'] ?></li>
-                    <li>Jumlah Barang: <?= $pemesanan['jumlah_barang'] ?></li>
-                    <li>Harga Total: <?= $pemesanan['harga_total'] ?></li>
-                    <li>Status: <?= $pemesanan['status_pemesanan'] ?></li>
-                </ul>
-                <form method="post">
-                    <input type="hidden" name="order_id" value="<?= $pemesanan['id'] ?>">
-                    <label for="status">Ubah Status:</label>
-                    <select name="status" id="status" class="form-control">
-                        <option value="Tunggu Konfirmasi">Tunggu Konfirmasi</option>
-                        <option value="Kurir mengambil laundry">Kurir mengambil laundry</option>
-                        <option value="Sementara dicuci">Sementara dicuci</option>
-                        <option value="Kurir mengantar laundry">Kurir mengantar laundry</option>
-                        <option value="Selesai">Selesai</option>
-                    </select>
-                    <div class="mt-3">
-                        <button class="btn btn-success" type="submit" name="update_order">Update</button>
-                        <button class="btn btn-secondary" type="submit" name="cancel_update">Cancel</button>
-                    </div>
-                </form>
-            </div>
-        </div>
+    <h1>Admin Dashboard</h1>
+    
+    <?php if ($pemesanan): ?>
+        <h2>Detail Pemesanan</h2>
+        <p>ID: <?php echo htmlspecialchars($pemesanan['id'], ENT_QUOTES, 'UTF-8'); ?></p>
+        <p>Nama: <?php echo htmlspecialchars($pemesanan['nama'], ENT_QUOTES, 'UTF-8'); ?></p>
+        <p>Alamat: <?php echo htmlspecialchars($pemesanan['alamat'], ENT_QUOTES, 'UTF-8'); ?></p>
+    <?php else: ?>
+        <p>Tidak ada detail untuk ditampilkan.</p>
     <?php endif; ?>
-</div>
 
-<script>
-$(document).ready(function() {
-    $('#pagination').DataTable();
-});
-</script>
+    <form action="admin_dash.php" method="get">
+        <label for="view">Lihat Pesanan:</label>
+        <input type="text" name="view" id="view" required>
+        <button type="submit">Lihat</button>
+    </form>
 </body>
 </html>
