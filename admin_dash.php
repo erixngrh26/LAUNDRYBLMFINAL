@@ -5,10 +5,10 @@ require_once "database.php";
 $pdo = new database();
 $edit_form = false;
 $view_order = false;
-// Init
+/* // Init
 $garisLintang = "";
 $garisBujur = "";
-/*
+
     // Jika user belum login dan membuka ini, maka langsung diarahkan ke halaman login
     if (!isset($_SESSION['email']) || empty($_SESSION['email'])) {
     header('Location: login.php');
