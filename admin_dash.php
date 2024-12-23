@@ -52,7 +52,7 @@ if (isset($_GET['edit'])) {
 // Handle view orders request
 if (isset($_GET['view'])) {
     $pemesanan = $pdo->getorders($_GET['view']);
-    $view_orderss = false;
+    $view_orderss = true;
     $userId = $pemesanan['id_user'];
     $jenisLaundry = $pemesanan['jenis_laundry'];
     $massaBarang = $pemesanan['massa_barang'];
