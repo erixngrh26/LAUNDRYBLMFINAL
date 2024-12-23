@@ -5,6 +5,7 @@ require_once "database.php";
 $pdo = new database();
 $edit_form = false;
 
+/*
 // Jika user belum login dan membuka ini, maka langsung diarahkan ke halaman login
 if (!isset($_SESSION['email']) || empty($_SESSION['email'])) {
     header('Location: login.php');
@@ -17,6 +18,7 @@ if ($_SESSION['email'] == 'admin@laundryonlinemks.com') {
     header('Location: admin_dash.php');
     exit;
 }
+*/
 
 // Memanggil tabel pesanan
 if (isset($_SESSION['id'])) {
