@@ -135,6 +135,9 @@ $banyakpesanan = $pdo->banyak_pesanan();
                 <li class="nav-item active">
                     <a class="nav-link" href="logout.php">Logout</a>
                 </li>
+                <li class="nav-item active" >
+                    <a class="nav-link" href="author.php">Author</a>
+                </li>
             </ul>
         </div>
     </nav>
