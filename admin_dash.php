@@ -8,19 +8,14 @@ define('ADMIN_EMAIL', 'admin@laundryonlinemks.com');
 // Initialize database connection
 $pdo = new database();
 $edit_form = false;
-$view_orderss = false;
+$view_orders = false;
 
 // Initialize variables
 $garisLintang = "";
 $garisBujur = "";
 
-// Check if user is logged in
-if (!isset($_SESSION['email'])) {
-    exit("<h1>Access Denied</h1>");
-}
-
-// Check if user is admin
-if ($_SESSION['email'] !== ADMIN_EMAIL) {
+// Check if user is logged in and is admin
+if (!isset($_SESSION['email']) || $_SESSION['email'] !== ADMIN_EMAIL) {
     exit("<h1>Access Denied</h1>");
 }
 
@@ -52,7 +47,7 @@ if (isset($_GET['edit'])) {
 // Handle view orders request
 if (isset($_GET['view'])) {
     $pemesanan = $pdo->getorders($_GET['view']);
-    $view_orderss = true;
+    $view_orders = true;
     $userId = $pemesanan['id_user'];
     $jenisLaundry = $pemesanan['jenis_laundry'];
     $massaBarang = $pemesanan['massa_barang'];
@@ -118,7 +113,7 @@ $banyakpesanan = $pdo->banyak_pesanan();
 
 <body>
     <!-- Navbar -->
-    <nav id="navbar-admin" class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <nav id="navbar-admin" class=" navbar navbar-expand-lg navbar-dark bg-primary">
         <a class="navbar-brand" href="admin_dash.php"><b>Laundry OnLine</b></a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -174,7 +169,7 @@ $banyakpesanan = $pdo->banyak_pesanan();
             <div class="container">
                 <h1 class="tengah" id="pesanan">Pesanan</h1>
                 <p class="tengah">Daftar pesanan dari pelanggan.</p>
-                <table id="pagination" class="table table-striped table-bordersed">
+                <table id="pagination" class="table table-striped table-bordered">
                     <thead>
                         <tr>
                             <th scope="col">ID User</th>
@@ -197,24 +192,18 @@ $banyakpesanan = $pdo->banyak_pesanan();
                             <td><?= $orders['jumlah_barang'] ?></td>
                             <td><?= $orders['harga_total'] ?></td>
                             <td><?= $orders['status_pemesanan'] ?></td>
-                            <td>
+                            < <td>
                                 <form action="admin_dash.php?view=<?php echo $orders['id']; ?>#pesanan" method="post">
                                     <input type="hidden" name="id" value="<?= $orders['id'] ?>">
                                     <input type="submit" value="View" name="view">
                                 </form>
                             </td>
                         </tr>
-                        <?php
-                            }
-                        ?>
+                        <?php endforeach; ?>
                     </tbody>
                 </table>
                 <br><br>
-                <?php 
-                    if ($view_orders == false){
-                    }
-                    else{
-                ?>
+                <?php if ($view_orders): ?>
                     <h4 class="tengah">View Data</h4>
                     <ul>
                         <li>ID User: <?= $userId; ?></li>
@@ -228,7 +217,7 @@ $banyakpesanan = $pdo->banyak_pesanan();
                         <li>Catatan: <?= $catatan; ?></li>
                         <li>Harga Total: <?= $hargaTotal; ?></li>
                         <li>Lokasi:</li>
-                        <div id="googleMaps" style="width:50%; height:440px; borders:solid black 1px;"></div>
+                        <div id="googleMaps" style="width:50%; height:440px; border:solid black 1px;"></div>
                         <form method="post">
                             <li>Status Pemesanan:</li>
                             <input type="radio" id="tunggu_konfirmasi" name="status" value="Tunggu Konfirmasi" checked>
@@ -242,7 +231,7 @@ $banyakpesanan = $pdo->banyak_pesanan();
                             <input type="radio" id="selesai" name="status" value="Selesai">
                             <label for="selesai">Selesai</label>
                             <p class="tengah">
-                                <input type="submit" name="update_orders" value="Update"/>
+                                <input type="submit" name="update_orderss" value="Update"/>
                                 <input type="submit" name="cancel_update" value="Cancel"/>
                             </p>
                         </form>
@@ -255,7 +244,7 @@ $banyakpesanan = $pdo->banyak_pesanan();
             <div class="container">
                 <h1 class="tengah" id="customers">Profil Pelanggan</h1>
                 <p class="tengah">Daftar pelanggan yang terdaftar.</p>
-                <table id="pagination2" class="table table-striped table-bordersed">
+                <table id="pagination2" class="table table-striped table-bordered">
                     <thead>
                         <tr>
                             <th scope="col">ID User</th>
@@ -271,7 +260,7 @@ $banyakpesanan = $pdo->banyak_pesanan();
                         <tr>
                             <th><?= $row['id'] ?></th>
                             <th><?= $row['name'] ?></th>
-                            <td><?= $row ['email'] ?></td>
+                            <td><?= $row['email'] ?></td>
                             <td><?= $row['nomor_telepon'] ?></td>
                             <td>
                                 <form action="admin_dash.php?edit=<?= $row['id']; ?>#customers" method="post">
@@ -289,7 +278,7 @@ $banyakpesanan = $pdo->banyak_pesanan();
                         <?php endforeach; ?>
                     </tbody>
                 </table>
-                <?php if ($edit_form): ?>
+ <?php if ($edit_form): ?>
                     <h4 class="tengah">Edit customer</h4>
                     <form method="post">
                         <p class="tengah">Nama:</p>
