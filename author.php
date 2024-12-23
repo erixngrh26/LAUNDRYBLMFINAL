@@ -6,7 +6,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About the Team - Laundry OnLine</title>
+    <title>About the Team - Laundry OnLine > LONDO</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -86,7 +86,7 @@
     <div class="container">
 
         <!-- Back to Dashboard Button -->
-        <a href="index.php">KEMBALIKAN SAJA</a> 
+        <a href="index.php">BACK TO HOME</a> 
 
         <!-- Hero Image -->
         <img src="images/teamgjls.png" alt="Team Hero Image" class="hero-image">
