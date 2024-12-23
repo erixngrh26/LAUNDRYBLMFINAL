@@ -16,6 +16,40 @@ $pdo = new database();
         header('Location: admin_dash.php');
         exit;
 }
+    // Mengambil data dan menaruh di kotak edit
+    if (isset($_GET['edit'])) {
+        $data = $pdo->getEditPesanan($_GET['edit']);
+        if ($data) {
+            $edit_form = true;
+            $name = $data['name'];
+            $email = $data['email'];
+            $nomor_telepon = $data['nomor_telepon'];
+            $id = $data['id'];
+        }
+}
+
+    // Mengupdate data
+    if (isset($_POST['update'])) {
+        $id = $_SESSION['id'];
+        $update = $pdo->updateData(
+            $_POST['nama'],
+            $_POST['email'],
+            $_POST['password'],
+            $_POST['nomor_telepon'],
+            $id
+    );
+    $_SESSION['name'] = $_POST['nama'];
+    $_SESSION['email'] = $_POST['email'];
+    $_SESSION['nomortelepon'] = $_POST['nomor_telepon'];
+    header("Location: dashboard.php#profil");
+    exit;
+}
+
+    // Untuk tombol membatalkan edit
+    if (isset($_POST['cancel'])) {
+        header("Location: dashboard.php#profil");
+        exit;
+    }
 
 ?>
 
