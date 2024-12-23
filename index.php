@@ -46,6 +46,7 @@ $pdo = new database();
                 <a class="nav-item nav-link active" href="#daftar-harga">Daftar Harga</a>
                 <a class="nav-item nav-link active" href="#faq">FAQ</a>
                 <a class="nav-item nav-link active" href="#hubungi-kami">Hubungi Kami</a>
+                <a class="nav-item nav-link active" href="author.php">Author</a>
                 <a class="btn btn-outline-success active" href="login.php"><b>Login</b></a>
             </div>
         </div>
