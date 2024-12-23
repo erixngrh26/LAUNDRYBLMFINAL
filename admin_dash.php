@@ -212,7 +212,6 @@ $banyakpesanan = $pdo->banyak_pesanan();
                 <br><br>
                 <?php 
                     if ($view_order == false){
-                        // Kosong
                     }
                     else{
                 ?>
