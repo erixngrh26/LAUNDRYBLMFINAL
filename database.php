@@ -134,7 +134,7 @@ class database{
         return $stmt -> fetch();
     }
 
-    public function getOrder($edit){
+    public function getOrders($edit){
         $sql = "SELECT * FROM `Order` WHERE id = :zip";
         $stmt = $this -> pdo ->prepare($sql);
         $stmt->execute(array(':zip' => $edit));
