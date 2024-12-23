@@ -148,9 +148,12 @@
             </div>
         </div>
 
-        <div class="footer">
-            &copy; 2024 LonDo | All Rights Reserved
-        </div>
+        <!-- Footer -->
+        <footer class="page-footer font-small blue">
+            <div class="footer-copyright text-center py-3 bg-dark text-white">© 2024 Copyright:
+                <a href="https://sae.com/"> LONDO > Laundry OnLine by SAEY</a>
+            </div>
+        </footer>
     </div>
 </body>
 </html>
