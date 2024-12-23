@@ -1,61 +1,20 @@
 <?php
 session_start();
 require_once "database.php";
-
+//Memanggil kelas database
 $pdo = new database();
-$edit_form = false;
 
-// Redirect if user is not logged in
-if (!isset($_SESSION['id'])) {
-    header("Location: login.php");
-    exit;
-}
-
-// Fetch orders
-$rows = $pdo->getPesanan($_SESSION['id']);
-
-// Fetch data for editing
-if (isset($_GET['edit'])) {
-    $data = $pdo->getEditPesanan($_GET['edit']);
-    if ($data) {
-        $edit_form = true;
-        $name = htmlspecialchars($data['name']);
-        $email = htmlspecialchars($data['email']);
-        $nomor_telepon = htmlspecialchars($data['nomor_telepon']);
-        $id = htmlspecialchars($data['id']);
-    }
-}
-
-// Update data
-if (isset($_POST['update'])) {
-    // Validate and sanitize input
-    $name = filter_var(trim($_POST['nama']), FILTER_SANITIZE_STRING);
-    $email = filter_var(trim($_POST['email']), FILTER_VALIDATE_EMAIL);
-    $nomor_telepon = filter_var(trim($_POST['nomor_telepon']), FILTER_SANITIZE_STRING);
+    //Jika user sudah login, maka akan langsung terpindah ke dashboard user/admin
+    if(isset($_SESSION['email']) == 0){
     
-    if ($name && $email && $nomor_telepon) {
-        try {
-            $update = $pdo->updateData($name, $email, $_POST['password'], $nomor_telepon, $_SESSION['id']);
-            $_SESSION['name'] = $name;
-            $_SESSION['email'] = $email;
-            $_SESSION['nomortelepon'] = $nomor_telepon;
-            header("Location: dashboard.php#profil");
-            exit;
-        } catch (Exception $e) {
-            // Handle error (e.g., log it and show a user-friendly message)
-            echo "Error updating data: " . $e->getMessage();
-        }
-    } else {
-        // Handle validation error
-        echo "Please fill in all required fields correctly.";
     }
-}
+    else{
+        header("Location: dashboard.php");    
+    }
 
-// Cancel edit
-if (isset($_POST['cancel'])) {
-    header("Location: dashboard.php#profil");
-    exit;
-}
+    //Memunculkan daftar harga
+    $rows = $pdo -> getHarga();
+
 ?>
 
 <!DOCTYPE html>
