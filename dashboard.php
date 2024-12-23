@@ -16,6 +16,13 @@ $pdo = new database();
         header('Location: admin_dash.php');
         exit;
 }
+    // Memanggil tabel pesanan
+    if (isset($_SESSION['id'])) {
+        $rows = $pdo->getPesanan($_SESSION['id']);
+    } else {
+        header("Location: login.php");
+        exit;
+    }
     // Mengambil data dan menaruh di kotak edit
     if (isset($_GET['edit'])) {
         $data = $pdo->getEditPesanan($_GET['edit']);
