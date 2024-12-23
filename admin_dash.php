@@ -8,14 +8,17 @@ $view_order = false;
 
     //Jika user sudah login, maka akan langsung terpindah ke dashboard user/admin
     if(isset($_SESSION['email']) == 0){
+        exit("<h1>Access Denied</h1>");
     
     }
-    else{
-        header("Location: dashboard.php");    
+    if($_SESSION['email'] != 'admin@laundryonlinemks.com'){
+        exit("<h1>Access Denied</h1>");    
     }
-
-    //Memunculkan daftar harga
-    $rows = $pdo -> getHarga();
+    //Memunculkan data customers
+    $rows = $pdo -> showData();
+    
+    //Memunculkan data order
+    $orders = $pdo -> showPesanan();
 
 ?>
 
