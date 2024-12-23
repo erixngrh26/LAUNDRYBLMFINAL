@@ -3,6 +3,7 @@ session_start();
 require_once "database.php";
 //Memanggil kelas database
 $pdo = new database();
+$edit_form = false;
 
     // Jika user belum login dan membuka ini, maka langsung diarahkan ke halaman login
     if (!isset($_SESSION['email']) || empty($_SESSION['email'])) {
@@ -18,11 +19,11 @@ $pdo = new database();
 }
     // Memanggil tabel pesanan
     if (isset($_SESSION['id'])) {
-        $rows = $pdo->getPesanan($_SESSION['id']);
-    } else {
+        $rows = $pdo->getPesanan($_SESSION['id']); } 
+    else {
         header("Location: login.php");
         exit;
-    }
+}
     // Mengambil data dan menaruh di kotak edit
     if (isset($_GET['edit'])) {
         $data = $pdo->getEditPesanan($_GET['edit']);
