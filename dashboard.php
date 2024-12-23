@@ -16,7 +16,8 @@ $edit_form = false;
     if ($_SESSION['email'] == 'admin@laundryonlinemks.com') {
         header('Location: admin_dash.php');
         exit;
-}
+} 
+/*
     // Memanggil tabel pesanan
     if (isset($_SESSION['id'])) {
         $rows = $pdo->getPesanan($_SESSION['id']); } 
@@ -24,6 +25,7 @@ $edit_form = false;
         header("Location: login.php");
         exit;
 }
+*/
     // Mengambil data dan menaruh di kotak edit
     if (isset($_GET['edit'])) {
         $data = $pdo->getEditPesanan($_GET['edit']);
