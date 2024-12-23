@@ -20,6 +20,80 @@ $view_order = false;
     //Memunculkan data order
     $orders = $pdo -> showPesanan();
 
+    //Menghapus data
+    if (isset($_POST['delete'])){
+        //Jika tekan hapus admin
+        //Ubah nomor jika id admin berubah
+        if($_POST['id'] == 1){
+            echo('<div class="alert alert-danger" role="alert">');
+            echo('Tidak bisa hapus administrator');
+            echo('</div>');
+        }
+        else{
+            $pdo -> deleteData($_POST['id']);
+            header("Location: admin_dash.php#customers");
+        }
+    }
+
+    //Mengambil data dan menaruh di kotak edit customer
+    if(isset($_GET['edit'])){
+        $data = $pdo -> getData($_GET['edit']);
+        $edit_form = true;
+        $name = $data['name'];
+        $email = $data['email'];
+        $nomor_telepon = $data['nomor_telepon'];
+        $id = $data['id'];
+    }
+
+    //Mengambil data dan menaruh di kotak view order
+    if(isset($_GET['view'])){
+        $pemesanan = $pdo -> getOrder($_GET['view']);
+        $view_order = true;
+        $userId = $pemesanan['id_user'];
+        $jenisLaundry = $pemesanan['jenis_laundry'];
+        $massaBarang = $pemesanan['massa_barang'];
+        $jumlahBarang = $pemesanan['jumlah_barang'];
+        $waktuPengambilan = $pemesanan['waktu_pengambilan'];
+        $waktuPengantaran = $pemesanan['waktu_pengantaran'];
+        $alamat = $pemesanan['alamat'];
+        $catatan = $pemesanan['catatan'];
+        $garisLintang = "".$pemesanan['garis_lintang'].", ";
+        $garisBujur = $pemesanan['garis_bujur'];
+        $hargaTotal = $pemesanan['harga_total'];
+        $statusPemesanan = $pemesanan['status_pemesanan'];
+        $orderId = $pemesanan['id'];
+        $listSatuan = $pemesanan['list_satuan'];
+    }
+
+    //Mengupdate data customers
+    if(isset($_POST['update'])){
+        $update = $pdo -> updateData($_POST['nama'], $_POST['email'], $_POST['password'], $_POST['nomor_telepon'], $id);
+        header("Location: admin_dash.php#customers");
+    }
+
+    //Mengupdate data order
+    if(isset($_POST['update_order'])){
+        $radio_status = $_POST['status'];
+        $update = $pdo -> updateStatus($radio_status, $orderId);
+        header("Location: admin_dash.php#pesanan");
+    }
+
+    //Untuk tombol membatalkan edit
+    if(isset($_POST['cancel'])){
+        header("Location: admin_dash.php#customers");
+    }
+    
+    //Untuk tombol membatalkan edit
+    if(isset($_POST['cancel_update'])){
+        header("Location: admin_dash.php#pesanan");
+    }
+    
+    //Mengambil jumlah data customers
+    $banyakdata = $pdo -> banyak_data();
+    
+    //Mengambil jumlah data pesanan
+    $banyakpesanan = $pdo -> banyak_pesanan();
+
 ?>
 
 <!DOCTYPE html>
