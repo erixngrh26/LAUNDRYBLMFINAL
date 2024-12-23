@@ -1,4 +1,4 @@
-<?php
+//* <?php
 session_start();
 require_once "database.php";
 
@@ -61,6 +61,7 @@ if (isset($_POST['cancel'])) {
     exit;
 }
 ?>
+ *//
 
 <!DOCTYPE html>
 <head>
