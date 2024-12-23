@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <head>
     <title>Dashboard User - Laundry OnLine</title>
     <script src="js/jquery-3.5.1.js"></script>
