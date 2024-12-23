@@ -6,7 +6,7 @@ $pdo = new database();
 $edit_form = false;
 $view_order = false;
 
-/*
+
 //Init
 $garisLintang = "";
 $garisBujur = "";
@@ -22,6 +22,8 @@ if($_SESSION['email'] != 'admin@laundryonlinemks.com'){
     exit("<h1>Access Denied</h1>");
 }
 
+
+/*
 //Memunculkan data customers
 $rows = $pdo -> showData();
 
