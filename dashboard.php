@@ -4,8 +4,9 @@ require_once "database.php";
 //Memanggil kelas database
 $pdo = new database();
 
-    //Jika user sudah login, maka akan langsung terpindah ke dashboard user/admin
-    if(isset($_SESSION['email']) == 0){
+    // Jika user belum login dan membuka ini, maka langsung diarahkan ke halaman login
+    if (!isset($_SESSION['email']) || empty($_SESSION['email'])) {
+    header('Location: login.php');
     
     }
     else{
