@@ -226,12 +226,12 @@ $pdo = new database();
         </div>
     </div>
 
-    <!-- Footer -->
-    <footer class="page-footer font-small blue">
-    <div class="footer-copyright text-center py-3 bg-dark text-white">© 2024 Copyright:
-        <a href="https://sae.com/"> Laundry OnLine</a>
-    </div>
-    </footer>
+   <!-- Footer -->
+        <footer class="page-footer font-small blue">
+            <div class="footer-copyright text-center py-3 bg-dark text-white">© 2024 Copyright:
+                <a href="https://sae.com/"> LONDO > Laundry OnLine by SAEY</a>
+            </div>
+        </footer>
     <script>
     // fungsi initialize untuk mempersiapkan peta
     function initialize() {
