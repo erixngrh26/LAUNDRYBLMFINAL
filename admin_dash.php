@@ -211,7 +211,7 @@ $banyakpesanan = $pdo->banyak_pesanan();
                 </table>
                 <br><br>
                 <?php 
-                    if ($view_order == false){
+                    if ($view_orders == false){
                     }
                     else{
                 ?>
