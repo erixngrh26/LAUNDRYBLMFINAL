@@ -17,15 +17,27 @@ $edit_form = false;
         header('Location: admin_dash.php');
         exit;
 } 
-/*
-    // Memanggil tabel pesanan
     if (isset($_SESSION['id'])) {
-        $rows = $pdo->getPesanan($_SESSION['id']); } 
-    else {
+        try {
+            // Assuming $pdo is your PDO instance
+            $rows = $pdo->getPesanan($_SESSION['id']);
+            
+            // Check if $rows is false or empty
+            if ($rows === false) {
+                // Handle the error (e.g., log it, show a message, etc.)
+                echo "Error retrieving orders.";
+            } else {
+                // Process the $rows as needed
+            }
+        } catch (Exception $e) {
+            // Handle any exceptions that may occur
+            echo "An error occurred: " . $e->getMessage();
+        }
+    } else {
+        // Redirect to login page if not logged in
         header("Location: login.php");
         exit;
 }
-*/
     // Mengambil data dan menaruh di kotak edit
     if (isset($_GET['edit'])) {
         $data = $pdo->getEditPesanan($_GET['edit']);
